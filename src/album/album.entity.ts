@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 
-import { PerformerEntity } from "src/performer/performer.entity";
-import { PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { PerformerEntity } from "../performer/performer.entity";
+import { TrackEntity } from "../track/track.entity";
+import { PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
 
 
 export class AlbumEntity {
@@ -23,6 +24,10 @@ export class AlbumEntity {
 
     @ManyToMany(() => PerformerEntity, performer => performer.albums)
     performers: PerformerEntity[];    
+
+    @OneToMany(() => TrackEntity, track => track.album)
+    tracks: TrackEntity[];    
+    
 }
 
 
