@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { AlbumEntity } from "../album/album.entity";
-import { PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
+import { PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, Entity } from "typeorm";
 
+@Entity()
 export class TrackEntity {
  // cual tiene un nombre (String), una duración (Number) y un id (UUID).
 

@@ -2,9 +2,9 @@
 
 import { PerformerEntity } from "../performer/performer.entity";
 import { TrackEntity } from "../track/track.entity";
-import { PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
+import { PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, Entity } from "typeorm";
 
-
+@Entity()
 export class AlbumEntity {
 // un nombre (String), una carátula (String) una fecha de lanzamiento (Date), una descripción (String) y un id (UUID).
     @PrimaryGeneratedColumn('uuid')

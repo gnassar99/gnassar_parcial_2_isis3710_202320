@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { AlbumEntity } from "../album/album.entity";
-import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class PerformerEntity {
     // tiene un nombre (String), una imagen (String), una descripción (String) y un id (UUID).
     @PrimaryGeneratedColumn('uuid')

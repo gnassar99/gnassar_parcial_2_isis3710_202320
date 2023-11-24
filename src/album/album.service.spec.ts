@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {getRepositoryToken} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import { AlbumEntity } from './album.entity';
-import { AlbumService } from './album.service';
-
 import { faker } from '@faker-js/faker';
+// import { BusinessLogicException } from '../shared/errors/business-errors';
+import { AlbumEntity } from '../album/album.entity';
+import { AlbumService } from '../album/album.service';
 
 describe('AlbumService', () => {
   let service: AlbumService;
@@ -27,19 +27,18 @@ describe('AlbumService', () => {
   const seedDatabase = async () => {
     repository.clear();
     albumList = [];
-    for(let i = 0; i < 10; i++){
-        const album: AlbumEntity = await repository.save({
-        id : i.toString(),
-        nombre: faker.music.albumName(),
-        caratula: faker.image.imageUrl(),
+    for (let i = 0; i < 10; i++) {
+      const album = await repository.save({
+        id: i.toString(),
+        nombre: faker.person.firstName(),
+        caratula: faker.image.url(),
         fechaLanzamiento: faker.date.past(),
-        descripcion: faker.lorem.paragraph(),
-        performers: [],
-        tracks: []        
-        })
-        albumList.push(album);
-      }
-    } 
+        // descripcion menor a 100 caracteres
+        descripcion: faker.lorem.sentence(2),
+      })
+      albumList.push(album);
+    }    
+  }
 
   it('should be defined', () => {
     expect(service).toBeDefined();
