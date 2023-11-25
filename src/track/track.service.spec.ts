@@ -103,4 +103,38 @@ describe('TrackService', () => {
     expect(trackCreated.album.id).toBe(album.id);
 
   });
+
+  it('should not create a new track without album', async () => {
+    const track : TrackEntity = {
+      id: '',
+      nombre: faker.person.firstName(),
+      duracion: faker.number.int({min: 0, max: 300}),
+      album: null
+    };
+    await expect(service.create(track, '999')).rejects.toHaveProperty("message", "The album associated with the track was not found");
+  });
+
+  it('should not create a new track with negative duration', async () => {
+    albumRepository.clear();
+    const album: AlbumEntity = await albumRepository.save({
+      id: '',
+      nombre: faker.person.firstName(),
+      caratula: faker.image.url(),
+      fechaLanzamiento: faker.date.past(),      
+      descripcion: faker.lorem.sentence(2),
+    })
+    expect(album).toBeDefined();
+    const albumFound = await albumRepository.findOne({where: {id: album.id}});
+    expect(albumFound).toBeDefined();
+    expect(albumFound.id).toBe(album.id);    
+    expect(albumFound).toBeInstanceOf(AlbumEntity);
+
+    const track : TrackEntity = {
+      id: '',
+      nombre: faker.person.firstName(),
+      duracion: -1,
+      album: albumFound
+    };
+    await expect(service.create(track, albumFound.id)).rejects.toHaveProperty("message", "The track duration must be positive");
+  });
 });

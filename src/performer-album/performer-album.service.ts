@@ -20,7 +20,7 @@ export class PerformerAlbumService {
         if (!album) {
             throw new BusinessLogicException('The album with the given id was not found', BusinessError.NOT_FOUND);
         }        
-        if (album.performers.length >= 3) {
+        if (album.performers.length > 3) {
             throw new BusinessLogicException('The album cannot have more than three performers associated', BusinessError.BAD_REQUEST);
         }
         const performer: PerformerEntity = await this.performerRepository.findOne({where: {id: performerId}, relations: ['albums']});
