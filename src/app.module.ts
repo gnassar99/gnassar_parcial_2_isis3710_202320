@@ -23,7 +23,7 @@ import { PerformerAlbumModule } from './performer-album/performer-album.module';
       password: 'postgres',
       database: 'marketplace',
       entities: [AlbumEntity, TrackEntity, PerformerEntity],
-      dropSchema: true,
+      dropSchema: false,
       synchronize: true,
       keepConnectionAlive: true
     }),
