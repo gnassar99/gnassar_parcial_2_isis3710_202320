@@ -33,8 +33,7 @@ describe('AlbumService', () => {
         id: i.toString(),
         nombre: faker.person.firstName(),
         caratula: faker.image.url(),
-        fechaLanzamiento: faker.date.past(),
-        // descripcion menor a 100 caracteres
+        fechaLanzamiento: faker.date.past(),        
         descripcion: faker.lorem.sentence(2),
       })
       albumList.push(album);
@@ -109,6 +108,8 @@ describe('AlbumService', () => {
     const albums = await service.findAll();
     expect(albums).toBeDefined();
     expect(albums.length).toEqual(albumList.length);
+    expect(albums[0].id).toEqual(albumList[0].id);
+    expect(albums[1].id).toEqual(albumList[1].id);
   });
 
   it ('should find an album by id', async () => {
