@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "6c6c6fb7-e555-4878-b77f-17ac6f1b26a6",
+		"name": "Performer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17321951",
+		"_collection_link": "https://www.postman.com/travelandes/workspace/g-nassar-parcial2web/collection/17321951-6c6c6fb7-e555-4878-b77f-17ac6f1b26a6?action=share&source=collection_link&creator=17321951"
+	},
+	"item": [
+		{
+			"name": "AddPerformer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with nombre, imagen, descripcion, and id properties\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object').that.has.all.keys('nombre', 'imagen', 'descripcion', 'id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Descripcion should not be longer than 100 characters\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData.descripcion.length).to.be.at.most(100);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Rafael Escalona\",\r\n  \"imagen\": \"https://example.com/es.jpg\",\r\n  \"descripcion\": \"Vallenato colombiano puro.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/performer",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddPerformer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Rafael Escalona\",\r\n  \"imagen\": \"https://example.com/es.jpg\",\r\n  \"descripcion\": \"Vallenato colombiano puro.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/performer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "153"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"99-ftxYmFVzPo86Zl+QyNr5dcrFeeQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 14:09:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nombre\": \"Rafael Escalona\",\n    \"imagen\": \"https://example.com/es.jpg\",\n    \"descripcion\": \"Vallenato colombiano puro.\",\n    \"id\": \"7266b4ae-925c-4eef-a73b-2bf968474e39\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddPerformerWithLongDescription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode and message properties\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object').that.has.all.keys('statusCode', 'message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The performer description cannot be more than 100 characters\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Descripcion is longer than 100 characters\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    if (responseData.descripcion) {\r",
+							"        pm.expect(responseData.descripcion.length).to.be.below(100);\r",
+							"    } else {\r",
+							"        console.log(\"Descripcion is undefined or null\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Rafael Escalona\",\r\n  \"imagen\": \"https://example.com/es.jpg\",\r\n  \"descripcion\": \"Vallenato colombiano puro del mejor del mundo increible. Absurdo. Que cosa más grande es Rafael. Lo queremos con toda la vida. Esta descripcion es muy larga y no va a servir. Que emocion. Que grande colombia.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/performer",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddPerformerWithLongDescription",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Rafael Escalona\",\r\n  \"imagen\": \"https://example.com/es.jpg\",\r\n  \"descripcion\": \"Vallenato colombiano puro del mejor del mundo increible. Absurdo. Que cosa más grande es Rafael. Lo queremos con toda la vida. Esta descripcion es muy larga y no va a servir. Que emocion. Que grande colombia.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/performer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "91"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5b-oho27PX5EqlJPUujAEWAXA3Mu/U\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 14:20:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The performer description cannot be more than 100 characters\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GetAllPerformers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the array has the required properties\", function () {\r",
+							"    pm.response.json().forEach(function(performer) {\r",
+							"        pm.expect(performer).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(performer).to.have.property('nombre').that.is.a('string');\r",
+							"        pm.expect(performer).to.have.property('imagen').that.is.a('string');\r",
+							"        pm.expect(performer).to.have.property('descripcion').that.is.a('string');  \r",
+							"        pm.expect(performer.descripcion.length).to.be.at.most(100);      \r",
+							"        pm.expect(performer).to.have.property('albums').that.is.an('array');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test('Number of performers is greater than 0', function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetAllPerformers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "677"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2a5-3IO9xlLgRxjc/Pm9q2Cwtb36dvQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 14:28:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"e305d335-4043-400d-9e4a-ffb6c8b4b584\",\n        \"nombre\": \"The Beatles\",\n        \"imagen\": \"https://example.com/the_beatles.jpg\",\n        \"descripcion\": \"Banda de rock británica.\",\n        \"albums\": []\n    },\n    {\n        \"id\": \"06f6d19b-2c61-470f-a815-d29bee746a9f\",\n        \"nombre\": \"Fleetwood Mac\",\n        \"imagen\": \"https://example.com/fleetwood_mac.jpg\",\n        \"descripcion\": \"Banda de rock británico-estadounidense.\",\n        \"albums\": []\n    },\n    {\n        \"id\": \"974531f9-2962-4b2f-a154-2a3dd4997af4\",\n        \"nombre\": \"U2\",\n        \"imagen\": \"https://example.com/u2.jpg\",\n        \"descripcion\": \"Banda de rock irlandesa.\",\n        \"albums\": []\n    },\n    {\n        \"id\": \"7266b4ae-925c-4eef-a73b-2bf968474e39\",\n        \"nombre\": \"Rafael Escalona\",\n        \"imagen\": \"https://example.com/es.jpg\",\n        \"descripcion\": \"Vallenato colombiano puro.\",\n        \"albums\": []\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetPerformer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with id property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with nombre property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('nombre');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with imagen property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('imagen');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with descripcion property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('descripcion');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with albums property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('albums');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Descripcion is longer than 100 characters\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    if (responseData.descripcion) {\r",
+							"        pm.expect(responseData.descripcion.length).to.be.below(100);\r",
+							"    } else {\r",
+							"        console.log(\"Descripcion is undefined or null\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetPerformer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "169"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a9-X7bYgI8qtp7dZyuP5Q/sXysw1Fw\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 14:34:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"e305d335-4043-400d-9e4a-ffb6c8b4b584\",\n    \"nombre\": \"The Beatles\",\n    \"imagen\": \"https://example.com/the_beatles.jpg\",\n    \"descripcion\": \"Banda de rock británica.\",\n    \"albums\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "GetPerformerWrongId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with message property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The performer with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetPerformerWrongId",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "76"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4c-OVBstW47JKCSN6jVXfEG1auD6Ik\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 14:40:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The performer with the given id was not found\"\n}"
+				}
+			]
+		}
+	]
+}

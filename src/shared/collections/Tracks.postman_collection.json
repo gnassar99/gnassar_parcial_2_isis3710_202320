@@ -1,0 +1,751 @@
+{
+	"info": {
+		"_postman_id": "616a520a-f43f-4e30-9ccc-cc11c3142b72",
+		"name": "Tracks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17321951",
+		"_collection_link": "https://www.postman.com/travelandes/workspace/g-nassar-parcial2web/collection/17321951-616a520a-f43f-4e30-9ccc-cc11c3142b72?action=share&source=collection_link&creator=17321951"
+	},
+	"item": [
+		{
+			"name": "AddTrack",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('nombre', 'duracion', 'id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response properties have correct types\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nombre).to.be.a('string');\r",
+							"    pm.expect(jsonData.duracion).to.be.a('number');   \r",
+							"    pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Duracion is not negative\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    if (responseData.duracion) {\r",
+							"        pm.expect(responseData.duracion).to.be.at.least(0);\r",
+							"    } else {\r",
+							"        console.log(\"Duracion is undefined or null\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Hola Jude\",\r\n  \"duracion\": 431\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/track/:albumId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track",
+						":albumId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "d8e96459-d427-48be-8967-5fa40db895aa"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddTrack",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Hola Jude\",\r\n  \"duracion\": 431\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/track/:albumId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								":albumId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "d8e96459-d427-48be-8967-5fa40db895aa"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "81"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"51-/BaUhMPMUIfB6yXk+gI26qNcHqM\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 15:00:54 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nombre\": \"Hola Jude\",\n    \"duracion\": 431,\n    \"id\": \"17e29798-1894-49d7-bc37-23947b70078d\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddTrackWithNegativeDuration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.have.property('nombre');\r",
+							"    pm.expect(jsonData).not.to.have.property('duracion');\r",
+							"    pm.expect(jsonData).not.to.have.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The track duration must be positive\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Duracion is negative\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    if (responseData.duracion) {\r",
+							"        pm.expect(responseData.duracion).to.be.lessThan(0)\r",
+							"    } else {\r",
+							"        console.log(\"Duracion is undefined or null\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"With or Without You\",\r\n  \"duracion\": -99\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/track/:albumId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track",
+						":albumId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "d8e96459-d427-48be-8967-5fa40db895aa"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddTrackWithNegativeDuration",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"With or Without You\",\r\n  \"duracion\": -99\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/track/:albumId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								":albumId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "d8e96459-d427-48be-8967-5fa40db895aa"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "66"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"42-aePE+b/itjL4hMTJgTR8z1fJTRE\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 15:11:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The track duration must be positive\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddTrackWithNoAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.have.property('nombre');\r",
+							"    pm.expect(jsonData).not.to.have.property('duracion');    \r",
+							"    pm.expect(jsonData).not.to.have.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album associated with the track was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"With or Without You\",\r\n  \"duracion\": 299\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/track/:albumId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track",
+						":albumId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "d8e96459-d427-48be-8967-5fa40db895ab"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddTrackWithNoAlbum",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"With or Without You\",\r\n  \"duracion\": 299\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/track/:albumId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								":albumId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "d8e96459-d427-48be-8967-5fa40db895ab"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "80"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"50-F2RErOM1pWod9Bz0aZpN47WaZCI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 15:14:07 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The album associated with the track was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GetAllTracks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the array has the required properties\", function () {\r",
+							"    pm.response.json().forEach(function(performer) {\r",
+							"        pm.expect(performer).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(performer).to.have.property('nombre').that.is.a('string');\r",
+							"        pm.expect(performer).to.have.property('duracion').that.is.a('number');  \r",
+							"        pm.expect(performer.duracion).to.be.at.least(0);      \r",
+							"        pm.expect(performer).to.have.property('album');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test('Number of tracks is greater than 0', function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/track",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetAllTracks",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "285"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11d-ZkzNjbz8mpGZLM0Qk1U4pxUbTks\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 15:23:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"faead6f3-a904-420a-af38-d3230caa65b2\",\n        \"nombre\": \"Hey Jude\",\n        \"duracion\": 431,\n        \"album\": null\n    },\n    {\n        \"id\": \"17e29798-1894-49d7-bc37-23947b70078d\",\n        \"nombre\": \"Hola Jude\",\n        \"duracion\": 431,\n        \"album\": null\n    },\n    {\n        \"id\": \"0399299e-4fb6-4a7f-9d6f-18e628d8379d\",\n        \"nombre\": \"Hola Jude\",\n        \"duracion\": 431,\n        \"album\": null\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetTrack",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with id property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with nombre property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('nombre');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with duracion property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('duracion');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with album property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('album');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Nombre cannot be empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.nombre).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Duracion is not negative\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    if (responseData.duracion) {\r",
+							"        pm.expect(responseData.duracion).to.be.at.least(0);\r",
+							"    } else {\r",
+							"        console.log(\"Duracion is undefined or null\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/track/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "faead6f3-a904-420a-af38-d3230caa65b2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetTrack",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "faead6f3-a904-420a-af38-d3230caa65b2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "93"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5d-mfRdMi4RWtIx5jSNfIkr4DS23Zs\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 15:27:44 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"faead6f3-a904-420a-af38-d3230caa65b2\",\n    \"nombre\": \"Hey Jude\",\n    \"duracion\": 431,\n    \"album\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "GetTrackWrongId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with message property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The track with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/track/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"track",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetTrackWrongID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"48-B53D7Z0vmyz3UOdkZztJA+hWhVo\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:06:32 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The track with the given id was not found\"\n}"
+				}
+			]
+		}
+	]
+}

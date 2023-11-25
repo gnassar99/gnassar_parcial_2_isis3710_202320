@@ -1,0 +1,596 @@
+{
+	"info": {
+		"_postman_id": "eeab7ea6-f018-4551-bbc9-357a65beddae",
+		"name": "Performer-Album",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17321951",
+		"_collection_link": "https://www.postman.com/travelandes/workspace/g-nassar-parcial2web/collection/17321951-eeab7ea6-f018-4551-bbc9-357a65beddae?action=share&source=collection_link&creator=17321951"
+	},
+	"item": [
+		{
+			"name": "AddPerformerToAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with id, nombre, caratula, fechaLanzamiento, descripcion, performers, and tracks properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('id', 'nombre', 'caratula', 'fechaLanzamiento', 'descripcion', 'performers', 'tracks');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"id is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"nombre is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nombre).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"caratula is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.caratula).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"fechaLanzamiento is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.fechaLanzamiento).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"descripcion is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.descripcion).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"performers is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.performers).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"tracks is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.tracks).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the performers array has id as a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.performers.forEach(function (performer) {\r",
+							"        pm.expect(performer.id).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the performers array has nombre as a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.performers.forEach(function (performer) {\r",
+							"        pm.expect(performer.nombre).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the performers array has imagen as a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.performers.forEach(function (performer) {\r",
+							"        pm.expect(performer.imagen).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the performers array has descripcion as a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.performers.forEach(function (performer) {\r",
+							"        pm.expect(performer.descripcion).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer-album",
+						"album",
+						":albumId",
+						"performer",
+						":performerId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "cbbb17f4-afc3-4580-b16b-f34e3ab13981"
+						},
+						{
+							"key": "performerId",
+							"value": "7266b4ae-925c-4eef-a73b-2bf968474e39"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddPerformerToAlbum",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer-album",
+								"album",
+								":albumId",
+								"performer",
+								":performerId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c3"
+								},
+								{
+									"key": "performerId",
+									"value": "7266b4ae-925c-4eef-a73b-2bf968474e39"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1076"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"434-7p0FE3dwYrX0LkxHzkX8Yo8/dYc\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:27:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"354bcbd6-c30e-4d4d-8f92-7303fe47b0c3\",\n    \"nombre\": \"The Dark Side of the Moon\",\n    \"caratula\": \"https://example.com/dark_side.jpg\",\n    \"fechaLanzamiento\": \"1973-03-01T00:00:00.000Z\",\n    \"descripcion\": \"El octavo álbum de estudio de la banda británica Pink Floyd.\",\n    \"performers\": [\n        {\n            \"id\": \"7266b4ae-925c-4eef-a73b-2bf968474e39\",\n            \"nombre\": \"Rafael Escalona\",\n            \"imagen\": \"https://example.com/es.jpg\",\n            \"descripcion\": \"Vallenato colombiano puro.\"\n        },\n        {\n            \"id\": \"7266b4ae-925c-4eef-a73b-2bf968474e39\",\n            \"nombre\": \"Rafael Escalona\",\n            \"imagen\": \"https://example.com/es.jpg\",\n            \"descripcion\": \"Vallenato colombiano puro.\",\n            \"albums\": [\n                {\n                    \"id\": \"d8e96459-d427-48be-8967-5fa40db895aa\",\n                    \"nombre\": \"Thriller\",\n                    \"caratula\": \"https://example.com/thriller.jpg\",\n                    \"fechaLanzamiento\": \"1982-11-30T00:00:00.000Z\",\n                    \"descripcion\": \"El sexto álbum de estudio de Michael Jackson.\"\n                },\n                {\n                    \"id\": \"354bcbd6-c30e-4d4d-8f92-7303fe47b0c3\",\n                    \"nombre\": \"The Dark Side of the Moon\",\n                    \"caratula\": \"https://example.com/dark_side.jpg\",\n                    \"fechaLanzamiento\": \"1973-03-01T00:00:00.000Z\",\n                    \"descripcion\": \"El octavo álbum de estudio de la banda británica Pink Floyd.\"\n                }\n            ]\n        }\n    ],\n    \"tracks\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "CannotAddPerformerToAlbum3Performers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode and message properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('statusCode', 'message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"statusCode is a number\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.statusCode).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"message is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with id, nombre, caratula, fechaLanzamiento, descripcion, performers, and tracks properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.not.have.all.keys('id', 'nombre', 'caratula', 'fechaLanzamiento', 'descripcion', 'performers', 'tracks');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album cannot have more than three performers associated\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer-album",
+						"album",
+						":albumId",
+						"performer",
+						":performerId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c3"
+						},
+						{
+							"key": "performerId",
+							"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CannotAddPerformerToAlbum3Performers",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer-album",
+								"album",
+								":albumId",
+								"performer",
+								":performerId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c3"
+								},
+								{
+									"key": "performerId",
+									"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "90"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5a-wHSCUaOdMeTcxI3IUVZZdfNwrlE\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:36:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The album cannot have more than three performers associated\"\n}"
+				}
+			]
+		},
+		{
+			"name": "CannotAddUnexistantPerformerToAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode and message properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('statusCode', 'message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"statusCode is a number\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.statusCode).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"message is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with id, nombre, caratula, fechaLanzamiento, descripcion, performers, and tracks properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.not.have.all.keys('id', 'nombre', 'caratula', 'fechaLanzamiento', 'descripcion', 'performers', 'tracks');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The performer with the given id was not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer-album",
+						"album",
+						":albumId",
+						"performer",
+						":performerId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "7ab441fd-117b-441a-83f5-af59158453e0"
+						},
+						{
+							"key": "performerId",
+							"value": "e305d335-4043-400d-9e4a-ffb6c8b4b582"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CannotAddUnexistantPerformerToAlbum",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer-album",
+								"album",
+								":albumId",
+								"performer",
+								":performerId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "7ab441fd-117b-441a-83f5-af59158453e0"
+								},
+								{
+									"key": "performerId",
+									"value": "e305d335-4043-400d-9e4a-ffb6c8b4b582"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "76"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4c-OVBstW47JKCSN6jVXfEG1auD6Ik\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:42:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The performer with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "CannotAddPerformerToUnexistantAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode and message properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('statusCode', 'message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"statusCode is a number\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.statusCode).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"message is a string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with id, nombre, caratula, fechaLanzamiento, descripcion, performers, and tracks properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.not.have.all.keys('id', 'nombre', 'caratula', 'fechaLanzamiento', 'descripcion', 'performers', 'tracks');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album with the given id was not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"performer-album",
+						"album",
+						":albumId",
+						"performer",
+						":performerId"
+					],
+					"variable": [
+						{
+							"key": "albumId",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+						},
+						{
+							"key": "performerId",
+							"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CannotAddPerformerToUnexistantAlbum",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/performer-album/album/:albumId/performer/:performerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"performer-album",
+								"album",
+								":albumId",
+								"performer",
+								":performerId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+								},
+								{
+									"key": "performerId",
+									"value": "e305d335-4043-400d-9e4a-ffb6c8b4b584"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"48-vuLrv11rS7vrmxIQUrVPd0kFEZg\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:41:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The album with the given id was not found\"\n}"
+				}
+			]
+		}
+	]
+}

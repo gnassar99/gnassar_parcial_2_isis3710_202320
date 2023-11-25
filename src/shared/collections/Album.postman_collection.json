@@ -1,0 +1,1027 @@
+{
+	"info": {
+		"_postman_id": "6f8a53ab-f9e8-40cc-962f-3ee9b2337096",
+		"name": "Album",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17321951",
+		"_collection_link": "https://www.postman.com/travelandes/workspace/g-nassar-parcial2web/collection/17321951-6f8a53ab-f9e8-40cc-962f-3ee9b2337096?action=share&source=collection_link&creator=17321951"
+	},
+	"item": [
+		{
+			"name": "AddAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('nombre', 'caratula', 'fechaLanzamiento', 'descripcion', 'id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response properties have correct types\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nombre).to.be.a('string');\r",
+							"    pm.expect(jsonData.caratula).to.be.a('string');\r",
+							"    pm.expect(jsonData.fechaLanzamiento).to.be.a('string');\r",
+							"    pm.expect(jsonData.descripcion).to.be.a('string');\r",
+							"    pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Descripcion cannot be empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.descripcion).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Nombre cannot be empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.nombre).to.exist.and.to.not.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Nevermind\",\r\n  \"caratula\": \"https://example.com/nevermind.jpg\",\r\n  \"fechaLanzamiento\": \"1991-09-24T00:00:00.000Z\",\r\n  \"descripcion\": \"El segundo álbum de estudio de la banda de rock estadounidense Nirvana.\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/album",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddAlbum",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Nevermind\",\r\n  \"caratula\": \"https://example.com/nevermind.jpg\",\r\n  \"fechaLanzamiento\": \"1991-09-24T00:00:00.000Z\",\r\n  \"descripcion\": \"El segundo álbum de estudio de la banda de rock estadounidense Nirvana.\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/album",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "248"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"f8-LgIP5fGEwP2rJfiySa3YB+5EjFI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:29:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"nombre\": \"Nevermind\",\n    \"caratula\": \"https://example.com/nevermind.jpg\",\n    \"fechaLanzamiento\": \"1991-09-24T00:00:00.000Z\",\n    \"descripcion\": \"El segundo álbum de estudio de la banda de rock estadounidense Nirvana.\",\n    \"id\": \"4dae3ce8-a091-4f4d-93e8-e9a06ee52669\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddAlbumWithoutDescription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.have.property('nombre');\r",
+							"    pm.expect(jsonData).not.to.have.property('caratula');\r",
+							"    pm.expect(jsonData).not.to.have.property('fechaLanzamiento');\r",
+							"    pm.expect(jsonData).not.to.have.property('descripcion');\r",
+							"    pm.expect(jsonData).not.to.have.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album description cannot be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Abbey Road\",\r\n  \"caratula\": \"https://example.com/abbey_road.jpg\",\r\n  \"fechaLanzamiento\": \"1969-09-26T00:00:00.000Z\",\r\n  \"descripcion\": \"\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/album",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "EmptyDescription",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Abbey Road\",\r\n  \"caratula\": \"https://example.com/abbey_road.jpg\",\r\n  \"fechaLanzamiento\": \"1969-09-26T00:00:00.000Z\",\r\n  \"descripcion\": \"\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/album",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "68"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"44-73Tl2u0FQx1blT4UM0d0JTNWsGI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 04:41:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The album description cannot be empty\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddAlbumWithoutName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not an object with properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.have.property('nombre');\r",
+							"    pm.expect(jsonData).not.to.have.property('caratula');\r",
+							"    pm.expect(jsonData).not.to.have.property('fechaLanzamiento');\r",
+							"    pm.expect(jsonData).not.to.have.property('descripcion');\r",
+							"    pm.expect(jsonData).not.to.have.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album name cannot be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"\",\r\n  \"caratula\": \"https://escalona.com/es.jpg\",\r\n  \"fechaLanzamiento\": \"1969-10-10\",\r\n  \"descripcion\": \"Este es un album de vallenato\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/album",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddAlbumWithoutName",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"\",\r\n  \"caratula\": \"https://escalona.com/es.jpg\",\r\n  \"fechaLanzamiento\": \"1969-10-10\",\r\n  \"descripcion\": \"Este es un album de vallenato\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/album",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "61"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3d-MBSDrkkbAZCEuBZ06vANSchKnfc\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:19:44 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The album name cannot be empty\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GetAllAlbums",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element in the array has the required properties\", function () {\r",
+							"    pm.response.json().forEach(function(album) {\r",
+							"        pm.expect(album).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(album).to.have.property('nombre').that.is.a('string');\r",
+							"        pm.expect(album).to.have.property('caratula').that.is.a('string');\r",
+							"        pm.expect(album).to.have.property('fechaLanzamiento').that.is.a('string');\r",
+							"        pm.expect(album).to.have.property('descripcion').that.is.a('string');\r",
+							"        pm.expect(album).to.have.property('performers').that.is.an('array');\r",
+							"        pm.expect(album).to.have.property('tracks').that.is.an('array');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test('Number of albums is greater than 0', function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetAll",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "806"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"326-uCbhD/XA3YqG6Kav/JvfEQXY1NE\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 04:35:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"c91bb393-2cb5-4604-b1c8-4aeaa5cbc398\",\n        \"nombre\": \"Abbey Road\",\n        \"caratula\": \"https://example.com/abbey_road.jpg\",\n        \"fechaLanzamiento\": \"1969-09-26T00:00:00.000Z\",\n        \"descripcion\": \"El undécimo álbum de estudio de la banda británica The Beatles.\",\n        \"performers\": [],\n        \"tracks\": []\n    },\n    {\n        \"id\": \"d8e96459-d427-48be-8967-5fa40db895aa\",\n        \"nombre\": \"Thriller\",\n        \"caratula\": \"https://example.com/thriller.jpg\",\n        \"fechaLanzamiento\": \"1982-11-30T00:00:00.000Z\",\n        \"descripcion\": \"El sexto álbum de estudio de Michael Jackson.\",\n        \"performers\": [],\n        \"tracks\": []\n    },\n    {\n        \"id\": \"354bcbd6-c30e-4d4d-8f92-7303fe47b0c3\",\n        \"nombre\": \"The Dark Side of the Moon\",\n        \"caratula\": \"https://example.com/dark_side.jpg\",\n        \"fechaLanzamiento\": \"1973-03-01T00:00:00.000Z\",\n        \"descripcion\": \"El octavo álbum de estudio de la banda británica Pink Floyd.\",\n        \"performers\": [],\n        \"tracks\": []\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with id property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with nombre property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('nombre');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with caratula property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('caratula');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with fechaLanzamiento property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('fechaLanzamiento');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with descripcion property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('descripcion');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with performers property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('performers');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with tracks property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('tracks');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Descripcion cannot be empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.descripcion).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Nombre cannot be empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.nombre).to.exist.and.to.not.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c3"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetAlbum",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c3"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "282"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11a-/UT3WW4Lnm2EWm0JF/eTlaD91T4\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:47:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"354bcbd6-c30e-4d4d-8f92-7303fe47b0c3\",\n    \"nombre\": \"The Dark Side of the Moon\",\n    \"caratula\": \"https://example.com/dark_side.jpg\",\n    \"fechaLanzamiento\": \"1973-03-01T00:00:00.000Z\",\n    \"descripcion\": \"El octavo álbum de estudio de la banda británica Pink Floyd.\",\n    \"performers\": [],\n    \"tracks\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "GetAlbumWrongId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with message property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetAlbumWrongId",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "354bcbd6-c30e-4d4d-8f92-7303fe47b0c2"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"48-vuLrv11rS7vrmxIQUrVPd0kFEZg\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:49:54 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The album with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "DelAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function() {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "7d164378-2bad-4be4-bfb3-a076899f620a"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "DelAlbum",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7d164378-2bad-4be4-bfb3-a076899f620a"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:58:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "DelAlbumUnExistantId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode property\", function() {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with message property\", function() {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "c91bb393-2cb5-4604-b1c8-4aeaa5cbc398"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "DelAlbumUnexistantId",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c91bb393-2cb5-4604-b1c8-4aeaa5cbc398"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"48-vuLrv11rS7vrmxIQUrVPd0kFEZg\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 13:54:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The album with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "DelAlbumWithTracks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with statusCode property\", function() {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object with message property\", function() {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"The album cannot be deleted because it has associated tracks\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/album/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "c1350e60-5f77-47c6-a181-907ed96d5828"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "DelAlbumWithTracks",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c1350e60-5f77-47c6-a181-907ed96d5828"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "91"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5b-euz2Av9kKIuWYTp2MBFZIwHke/Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Nov 2023 16:56:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"message\": \"The album cannot be deleted because it has associated tracks\"\n}"
+				}
+			]
+		}
+	]
+}
